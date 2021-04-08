@@ -1,0 +1,19 @@
+{
+    "name": "socialiteproviders/vcc",
+    "description": "VCC OAuth2 Provider for Laravel Socialite",
+    "license": "MIT",
+    "authors": [{
+        "name": "TheVisualCableCollective",
+        "email": "support@vcc-online.eu"
+    }],
+    "require": {
+        "php": "^7.2",
+        "socialiteproviders/manager": "^4.0",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SocialiteProviders\\VCC\\": ""
+        }
+    }
+}
