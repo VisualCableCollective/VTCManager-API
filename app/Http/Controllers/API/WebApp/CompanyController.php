@@ -167,6 +167,8 @@ class CompanyController extends Controller
     }
 
     public function employee_kick(WebAppRequest $request, $id){
+        if($request->user()->id == $id)
+            return response("You can't kick yourself.", 409);
         $user = $request->user()->company->users()->where("id", "=", $id)->get()->first();
         $user->company_id = 0;
         $user->save();
@@ -180,7 +182,7 @@ class CompanyController extends Controller
     public function leave(WebAppRequest $request){
         if($request->user()->id == $request->user()->company->owner_id)
             return response("You can't leave the company because you are the owner.", 409);
-            
+
         $request->user()->company_id = 0;
         $request->user()->save();
         return response("", 204);
