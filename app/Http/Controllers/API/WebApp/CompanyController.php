@@ -176,4 +176,13 @@ class CompanyController extends Controller
         $request->user()->company->delete();
         return response("", 204);
     }
+
+    public function leave(WebAppRequest $request){
+        if($request->user()->id == $request->user()->company->owner_id)
+            return response("You can't leave the company because you are the owner.", 409);
+            
+        $request->user()->company_id = 0;
+        $request->user()->save();
+        return response("", 204);
+    }
 }

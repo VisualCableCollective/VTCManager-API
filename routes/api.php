@@ -61,6 +61,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
         Route::post('application/{id}/decline', [App\Http\Controllers\API\WebApp\CompanyController::class, 'application_decline'])->middleware('owner');
         Route::get('employees', [App\Http\Controllers\API\WebApp\CompanyController::class, 'employees']);
         Route::get('employee/{id}/kick', [App\Http\Controllers\API\WebApp\CompanyController::class, 'employee_kick'])->middleware('owner');
+        Route::delete('leave', [App\Http\Controllers\API\WebApp\CompanyController::class, 'leave']);
     });
 });
 
