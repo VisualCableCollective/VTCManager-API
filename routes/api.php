@@ -62,6 +62,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
         Route::get('employees', [App\Http\Controllers\API\WebApp\CompanyController::class, 'employees']);
         Route::get('employee/{id}/kick', [App\Http\Controllers\API\WebApp\CompanyController::class, 'employee_kick'])->middleware('owner');
         Route::delete('leave', [App\Http\Controllers\API\WebApp\CompanyController::class, 'leave']);
+        Route::post('rename', [App\Http\Controllers\API\WebApp\CompanyController::class, 'rename'])->middleware('owner');
     });
 });
 

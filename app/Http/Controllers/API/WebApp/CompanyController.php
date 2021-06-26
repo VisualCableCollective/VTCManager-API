@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\WebApp;
 
 use App\Http\Controllers\WebAppAuthController;
 use App\Http\Requests\ApplyToCompanyRequest;
+use App\Http\Requests\RenameCompanyRequest;
 use App\Http\Requests\SearchCompanyRequest;
 use App\Http\Requests\WebAppRequest;
 use App\Models\User;
@@ -185,6 +186,13 @@ class CompanyController extends Controller
 
         $request->user()->company_id = 0;
         $request->user()->save();
+        return response("", 204);
+    }
+
+    public function rename(RenameCompanyRequest $request) {
+        $validatedRequest = $request->validated();
+        $request->user()->company->name = $validatedRequest["new_company_name"];
+        $request->user()->company->save();
         return response("", 204);
     }
 }
