@@ -143,13 +143,17 @@ class JobController extends Controller
             );
         }
 
-        Cargo::firstOrCreate(
+        $cargo = Cargo::firstOrCreate(
             ["id" => $requestData["cargo_id"]],
             ["game_item_translation_id" => "cargo." . $requestData["cargo_id"]],
         );
+        if($cargo->game_item_translation_id == null) {
+            $cargo->game_item_translation_id = "cargo." . $requestData["cargo_id"];
+            $cargo->save();
+        }
         $Job->cargo_id = $requestData["cargo_id"];
 
-        //check if city departure exists
+        //check if city departure existss
         City::firstOrCreate(
             ["id" => $requestData["city_departure_id"]],
             ["name" => $requestData["city_departure_name"]],
