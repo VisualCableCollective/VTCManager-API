@@ -14,7 +14,7 @@ class AddOwnerIdToCompanies extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->unsignedInteger("owner_id");
+            $table->unsignedInteger("owner_id")->default(0);
         });
     }
 
