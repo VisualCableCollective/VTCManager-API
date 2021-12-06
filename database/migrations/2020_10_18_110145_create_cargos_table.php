@@ -15,7 +15,7 @@ class CreateCargosTable extends Migration
     {
         Schema::create('cargos', function (Blueprint $table) {
             $table->string("id");
-            $table->string("name");
+            $table->string("game_item_translation_id");
         });
     }
 
