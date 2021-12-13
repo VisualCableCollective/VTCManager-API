@@ -20,7 +20,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
 
     // User System
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        return \App\Models\User::with("license_key")->find($request->user()->id);
     });
 
     //Job System

@@ -94,4 +94,9 @@ class User extends Authenticatable
              return $response->json()["username"];
         });
     }
+
+    public function license_key()
+    {
+        return $this->hasOne(LicenseKey::class);
+    }
 }
