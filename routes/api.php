@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/status', [\App\Http\Controllers\API\ServiceStatusController::class, 'index']);
 
+Route::post('/user/activate', [\App\Http\Controllers\UserController::class, 'activate'])->middleware("auth:sanctum");
+
 Route::middleware(['auth:sanctum', 'licenseKey'])->group(function (){
 
     // User System
