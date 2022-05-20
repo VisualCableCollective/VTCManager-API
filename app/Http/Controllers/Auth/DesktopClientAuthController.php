@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 
@@ -16,11 +17,13 @@ class DesktopClientAuthController extends Controller
      * Redirects the desktop client user to the VCC to get the oauth token
      */
     public static function redirect(Request $request){
+        $request->session()->put('state', $state = Str::random(40));
+
         return redirect(
             config("services.vcc-client-auth.redirect_to_url").
             "?client_id=".config("services.vcc-client-auth.client_id").
             "&redirect_uri=".urlencode(route("auth.vcc.desktop-client.callback")).
-            "&response_type=code&scope=&state=".urlencode($request->session()->get('state')));
+            "&response_type=code&scope=&state=".urlencode($state));
     }
 
     /**
@@ -29,7 +32,7 @@ class DesktopClientAuthController extends Controller
     public static function callback(){
         $response = [];
 
-        $VCC_User = Socialite::driver('vcc-client-auth')->stateless()->user();
+        $VCC_User = Socialite::driver('vcc-client-auth')->user();
         $VTCM_User = User::where(['id' => $VCC_User->id])->first();
 
         //if user don't exists in the db
