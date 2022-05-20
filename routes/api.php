@@ -18,7 +18,7 @@ Route::get('/status', [\App\Http\Controllers\API\ServiceStatusController::class,
 
 Route::post('/user/activate', [\App\Http\Controllers\UserController::class, 'activate'])->middleware("auth:sanctum");
 
-Route::middleware(['auth:sanctum', 'licenseKey'])->group(function (){
+Route::middleware(['auth:sanctum', /*'licenseKey'*/])->group(function (){
 
     // User System
     Route::get('/user', function (Request $request) {
