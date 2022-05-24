@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/status', [\App\Http\Controllers\API\ServiceStatusController::class, 'index']);
 
-Route::middleware(['auth:sanctum'])->group(function (){
+Route::post('/user/activate', [\App\Http\Controllers\UserController::class, 'activate'])->middleware("auth:sanctum");
+
+Route::middleware(['auth:sanctum', /*'licenseKey'*/])->group(function (){
 
     // User System
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        return \App\Models\User::with("license_key")->find($request->user()->id);
     });
 
     //Job System

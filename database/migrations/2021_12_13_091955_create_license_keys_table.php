@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCargosTable extends Migration
+class CreateLicenseKeysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateCargosTable extends Migration
      */
     public function up()
     {
-        Schema::create('cargos', function (Blueprint $table) {
-            $table->string("id");
-            $table->string("game_item_translation_id");
+        Schema::create('license_keys', function (Blueprint $table) {
+            $table->uuid("id")->primary();
+            $table->timestamps();
+            $table->integer('user_id')->unsigned()->nullable();
         });
     }
 
@@ -26,6 +27,6 @@ class CreateCargosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cargos');
+        Schema::dropIfExists('license_keys');
     }
 }

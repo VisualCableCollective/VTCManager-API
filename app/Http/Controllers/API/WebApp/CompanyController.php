@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\WebApp;
 
-use App\Http\Controllers\WebAppAuthController;
 use App\Http\Requests\ApplyToCompanyRequest;
 use App\Http\Requests\RenameCompanyRequest;
 use App\Http\Requests\SearchCompanyRequest;

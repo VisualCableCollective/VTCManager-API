@@ -14,7 +14,7 @@ class AddLatestVccApiTokenToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->longText("latest_vcc_api_token");
+            $table->longText("latest_vcc_api_token")->default("");
         });
     }
 

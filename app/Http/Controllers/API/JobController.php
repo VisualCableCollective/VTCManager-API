@@ -109,6 +109,10 @@ class JobController extends Controller
                 return $latest_job->id;
         }
 
+        if (!$request->user()->company) {
+            return ["success" => false];
+        }
+
         $Job = $request->user()->jobs()->create([
             //Damage
             'truck_cabin_damage_at_start' => (float)$requestData["truck_cabin_damage_at_start"],
@@ -204,7 +208,7 @@ class JobController extends Controller
         }
 
         $Job->save();
-        return $Job->id;
+        return ["success" => true, "id" => $Job->id];
     }
 
     /** Finish the job successfully (mark job as delivered)
