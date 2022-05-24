@@ -157,7 +157,7 @@ class JobController extends Controller
         }
         $Job->cargo_id = $requestData["cargo_id"];
 
-        //check if city departure exists
+        //check if city departure existss
         City::firstOrCreate(
             ["id" => $requestData["city_departure_id"]],
             ["name" => $requestData["city_departure_name"]],
