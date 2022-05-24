@@ -187,4 +187,11 @@ class CompanyController extends Controller
         $request->user()->save();
         return response("", 204);
     }
+
+    public function rename(RenameCompanyRequest $request) {
+        $validatedRequest = $request->validated();
+        $request->user()->company->name = $validatedRequest["new_company_name"];
+        $request->user()->company->save();
+        return response("", 204);
+    }
 }
