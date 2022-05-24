@@ -88,6 +88,6 @@ class ClientController extends Controller
             $user->OrientationHeading = null;
         }
         $user->save();
-        abort(204);
+        return response("", 204);
     }
 }
