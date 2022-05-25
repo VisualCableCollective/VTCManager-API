@@ -110,7 +110,7 @@ class JobController extends Controller
         }
 
         if (!$request->user()->company) {
-            return ["success" => false];
+            return ["success" => false, "reason" => "User needs to be member of a company."];
         }
 
         $Job = $request->user()->jobs()->create([
