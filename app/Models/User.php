@@ -34,6 +34,13 @@ class User extends Authenticatable
      */
 
     /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false; // Not incrementing because it's the VCC ID
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
