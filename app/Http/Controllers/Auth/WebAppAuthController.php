@@ -43,4 +43,12 @@ class WebAppAuthController extends Controller
             "?token=".
             urlencode($VTCM_User->createToken("VTCManager WebApp")->plainTextToken));
     }
+
+    public static function logout(Request $request) {
+        $msg = ["message" => "OK"];
+
+        $request->user()->currentAccessToken()->delete();
+
+        return response($msg, 200);
+    }
 }

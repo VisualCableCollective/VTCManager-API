@@ -20,6 +20,13 @@ Route::post('/user/activate', [\App\Http\Controllers\UserController::class, 'act
 
 Route::middleware(['auth:sanctum', /*'licenseKey'*/])->group(function (){
 
+    // Auth
+    Route::prefix('auth')->group(function() {
+        Route::prefix('web-app')->group(function() {
+            Route::get('logout', [\App\Http\Controllers\Auth\WebAppAuthController::class, 'logout']);
+        });
+    });
+
     // User System
     Route::get('/user', function (Request $request) {
         return \App\Models\User::with("license_key")->find($request->user()->id);
