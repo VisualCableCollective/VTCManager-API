@@ -250,7 +250,7 @@ class JobController extends Controller
     {
         $validatedRequest = $request->validated();
 
-        $job = Job::find($id);
+        $job = Job::findorfail($id);
         if ($job->user->id != $request->user()->id)
             abort(401);
         $job->status = "cancelled";
