@@ -25,7 +25,6 @@ class CompanyController extends Controller
         ])->validate();
 
         if(!$request->user()->company){
-
             $company = [];
             $company["name"] =  $validatedData["company_name"];
             $company["owner_id"] =  $request->user()->id;

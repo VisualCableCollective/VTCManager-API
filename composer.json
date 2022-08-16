@@ -19,7 +19,9 @@
         "laravel/tinker": "^2.5",
         "sentry/sentry-laravel": "^2.12",
         "socialiteproviders/generators": "^4.6",
-        "socialiteproviders/manager": "^4.0"
+        "socialiteproviders/manager": "^4.0",
+        "symfony/http-client": "^6.1",
+        "symfony/mailgun-mailer": "^6.1"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0",
