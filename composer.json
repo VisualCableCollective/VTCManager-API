@@ -13,13 +13,15 @@
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.0",
-        "laravel/sanctum": "^2.8",
+        "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.1",
         "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.5",
         "sentry/sentry-laravel": "^2.12",
         "socialiteproviders/generators": "^4.6",
-        "socialiteproviders/manager": "^4.0"
+        "socialiteproviders/manager": "^4.0",
+        "symfony/http-client": "^6.1",
+        "symfony/mailgun-mailer": "^6.1"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0",
