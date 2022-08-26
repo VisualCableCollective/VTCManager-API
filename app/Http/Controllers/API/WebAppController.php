@@ -12,6 +12,28 @@ class WebAppController extends Controller
     public function check(Request $request){
         $response = $request->user()->with(['company'])->find($request->user()->id);
         $response["VCC_User"] = Socialite::driver('vcc')->stateless()->userFromToken($request->user()->latest_vcc_api_token);
+
+        // remove API tokens for VCC
+        unset($response["latest_vcc_api_token"]);
+        unset($response["VCC_User"]->token);
+        unset($response["VCC_User"]->refreshToken);
+        unset($response["VCC_User"]->accessTokenResponseBody);
+        unset($response["VCC_User"]->approvedScopes);
+        unset($response["VCC_User"]->expiresIn);
+
+        // remove private user data
+        unset($response["VCC_User"]->first_name);
+        unset($response["VCC_User"]->last_name);
+
+        unset($response["VCC_User"]->user["email"]);
+        unset($response["VCC_User"]->user["first_name"]);
+        unset($response["VCC_User"]->user["last_name"]);
+        unset($response["VCC_User"]->user["created_at"]);
+        unset($response["VCC_User"]->user["updated_at"]);
+        unset($response["VCC_User"]->user["two_factor_confirmed_at"]);
+        unset($response["VCC_User"]->user["email_verified_at"]);
+        unset($response["VCC_User"]->user["email_verified_at"]);
+
         return $response;
     }
 
