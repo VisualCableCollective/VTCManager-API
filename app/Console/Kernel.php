@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new RemoveDeletedUsers)->daily();
+        $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
     /**
