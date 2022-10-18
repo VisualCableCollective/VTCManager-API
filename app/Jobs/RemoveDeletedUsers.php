@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 use SocialiteProviders\VCC\VccAuthenticationFailedException;
@@ -34,21 +35,27 @@ class RemoveDeletedUsers implements ShouldQueue
      */
     public function handle()
     {
-        // I think that's unsafe, because it can only check if the API token is still valid.
-        $count = 0;
+        $s2sc_token = config('s2sc.token');
+
+        if (empty($s2sc_token)) {
+            Log::error("RemoveDeletedUsers: No VCC_S2SC_TOKEN specified in the env.");
+            $this->fail();
+            return;
+        }
 
         $users = User::all();
+        $count = 0;
+
         foreach ($users as $user) {
-            try {
-                Socialite::driver('vcc')->stateless()->userFromToken($user->latest_vcc_api_token);
-            } catch (VccAuthenticationFailedException $e) {
+            $response = Http::withHeaders([
+                'S2SC-Token' => $s2sc_token
+            ])->get('https://vcc-online.eu/api/s2sc/user/' . $user->id);
+
+            if ($response->ok() && !$response->json()['success']) {
                 $count++;
-                echo $user->id;
             }
         }
 
-        $msg = "RemoveDeletedUsers: $count users have an invalid token.";
-        Log::info($msg);
-        echo $msg;
+        Log::info("RemoveDeletedUsers: $count users don't have a VCC account.");
     }
 }
