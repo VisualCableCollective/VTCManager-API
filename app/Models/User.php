@@ -106,7 +106,7 @@ class User extends Authenticatable
              if($response->status() != 200)
                  return "n/a";
 
-             return $response->json()["username"];
+             return $response->json()["data"]["username"];
         });
     }
 
