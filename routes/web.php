@@ -31,10 +31,6 @@ Route::prefix('auth')->name('auth.')->group(function(){
     });
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/download', function () {
-    return view('download');
-})->name('download');
-
 Route::prefix('social')->name('social.')->group(function(){
     Route::redirect("discord", "https://discord.gg/XuY8Bah")->name('discord');
 });
