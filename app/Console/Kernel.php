@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\ReduceJobDataEntries;
+use App\Jobs\MinimizeJobDataEntries;
 use App\Jobs\RemoveDeletedUsers;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new RemoveDeletedUsers)->daily();
+        $schedule->job(new MinimizeJobDataEntries)->daily();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 
