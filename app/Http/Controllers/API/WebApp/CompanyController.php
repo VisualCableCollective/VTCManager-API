@@ -45,6 +45,12 @@ class CompanyController extends Controller
     public function dashboard(WebAppRequest $request){
         $response = [];
 
+        if (!$request->user()->company()->exists()) {
+            $response["error"] = "USER_HAS_NO_COMPANY";
+            $response["msg"] = "User is not a member of a company.";
+            return $response;
+        }
+
         $response["jobs_delivered_total"] = $request->user()->company->jobs()->where("status", "=", "delivered")->count();
 
         $last_7_days = \Carbon\Carbon::today()->subDays(7);
@@ -77,6 +83,13 @@ class CompanyController extends Controller
     }
 
     public function jobs(WebAppRequest $request){
+        if (!$request->user()->company()->exists()) {
+            $response = [];
+            $response["error"] = "USER_HAS_NO_COMPANY";
+            $response["msg"] = "User is not a member of a company.";
+            return $response;
+        }
+
         return $request->user()->company->jobs()->latest()->with([
             'truck_model',
             'truck_model.truck_manufacturer',
@@ -111,6 +124,13 @@ class CompanyController extends Controller
     }
 
     public function applications(WebAppRequest $request){
+        if (!$request->user()->company()->exists()) {
+            $response = [];
+            $response["error"] = "USER_HAS_NO_COMPANY";
+            $response["msg"] = "User is not a member of a company.";
+            return $response;
+        }
+
         $response = $request->user()->company->job_applications()->latest()->with([
             'applicant' => function($q){
                 $q->select("id");
@@ -155,6 +175,13 @@ class CompanyController extends Controller
     }
 
     public function employees(WebAppRequest $request){
+        if (!$request->user()->company()->exists()) {
+            $response = [];
+            $response["error"] = "USER_HAS_NO_COMPANY";
+            $response["msg"] = "User is not a member of a company.";
+            return $response;
+        }
+        
         $response = $request->user()->company->users()->paginate(5);
         $index = 0;
         foreach($response as $user){
