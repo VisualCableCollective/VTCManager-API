@@ -52,10 +52,11 @@ class RemoveDeletedUsers implements ShouldQueue
             ])->get('https://vcc-online.eu/api/s2sc/user/' . $user->id);
 
             if ($response->ok() && !$response->json()['success']) {
+                $user->delete();
                 $count++;
             }
         }
 
-        Log::info("RemoveDeletedUsers: $count users don't have a VCC account.");
+        Log::info("RemoveDeletedUsers: $count users have been deleted as they don't have a VCC account anymore.");
     }
 }
