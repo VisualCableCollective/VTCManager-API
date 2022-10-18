@@ -88,7 +88,7 @@ class User extends Authenticatable
      */
     public static function getUsername(int $userID){
 
-         return Cache::remember('vcc-username-'.$userID, 300 , function () use($VCC_API_AuthToken, $userID) {
+         return Cache::remember('vcc-username-'.$userID, 300 , function () use($userID) {
              $s2sc_token = config('s2sc.token');
 
              if (empty($s2sc_token)) {
