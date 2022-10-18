@@ -103,7 +103,7 @@ class User extends Authenticatable
                  ]
              )->get('https://vcc-online.eu/api/s2sc/user/' . $userID);
 
-             if($response->status() != 200)
+             if($response->status() != 200 || !$response->json()["success"])
                  return "n/a";
 
              return $response->json()["data"]["username"];
