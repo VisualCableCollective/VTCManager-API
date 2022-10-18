@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -85,15 +86,22 @@ class User extends Authenticatable
      * @param $VCC_API_AuthToken string valid VCC API auth token
      * @return mixed
      */
-    public static function getUsername(int $userID, string $VCC_API_AuthToken){
+    public static function getUsername(int $userID){
 
          return Cache::remember('vcc-username-'.$userID, 300 , function () use($VCC_API_AuthToken, $userID) {
+             $s2sc_token = config('s2sc.token');
+
+             if (empty($s2sc_token)) {
+                 Log::error("User::getUsername: No VCC_S2SC_TOKEN specified in the env.");
+                 return "n/a";
+             }
+
              $response = Http::withHeaders(
                  [
-                     'Authorization' => 'Bearer ' . $VCC_API_AuthToken,
+                     'S2SC-Token' => $s2sc_token,
                      'Accept' => 'application/json',
                  ]
-             )->get('https://vcc-online.eu/api/user/' . $userID);
+             )->get('https://vcc-online.eu/api/s2sc/user/' . $userID);
 
              if($response->status() != 200)
                  return "n/a";

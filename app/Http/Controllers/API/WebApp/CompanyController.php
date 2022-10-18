@@ -139,7 +139,7 @@ class CompanyController extends Controller
 
         $index = 0;
         foreach($response as $application){
-            $response[$index]["applicant"]["username"] = User::getUsername($application->applicant->id, $request->user()->latest_vcc_api_token);
+            $response[$index]["applicant"]["username"] = User::getUsername($application->applicant->id);
             $index++;
         }
 
@@ -153,7 +153,7 @@ class CompanyController extends Controller
             }
         ])->get()->first();
 
-        $response["applicant"]["username"] = User::getUsername($response["applicant"]["id"], $request->user()->latest_vcc_api_token);
+        $response["applicant"]["username"] = User::getUsername($response["applicant"]["id"]);
 
         return $response;
     }
@@ -185,7 +185,7 @@ class CompanyController extends Controller
         $response = $request->user()->company->users()->paginate(5);
         $index = 0;
         foreach($response as $user){
-            $response[$index]["username"] = User::getUsername($user->id, $request->user()->latest_vcc_api_token);
+            $response[$index]["username"] = User::getUsername($user->id);
             $index++;
         }
 
