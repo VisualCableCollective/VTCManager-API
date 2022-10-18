@@ -38,7 +38,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
                 if (!request()->has('accessCode') || request()->accessCode != config('s2sc.token')) return false;
 
                 request()->session()->put('s2sc_access_code', request()->accessCode);
-                request()->redirect(request()->fullUrlWithoutQuery('accessCode'));
+                redirect(config('horizon.path'));
             }
 
             return config('s2sc.token') != null && request()->session()->get('s2sc_access_code') == config('s2sc.token');
