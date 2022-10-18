@@ -69,19 +69,6 @@ class JobController extends Controller
             }
         ])->findorfail($id);
 
-        $data = $job->job_data_entries()->get();
-        $count = $data->count();
-        if($count > 60){
-            //reduce models
-            $delta = floor($count/60);
-            for($currentStage = 0; $currentStage < $count; $currentStage = $currentStage + $delta){
-                $i = $currentStage + 1;
-                while($i < $currentStage + $delta && $i < $count){
-                    $data[$i]->delete();
-                    $i++;
-                }
-            }
-        }
         $job["job_data_entries"] = $job->job_data_entries()->get();
         return $job;
     }

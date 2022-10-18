@@ -16,7 +16,7 @@ class UserIsOwnerOfCompany
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->user()->id != $request->user()->company->owner_id){
+        if(!$request->user()->company()->exists() || $request->user()->id != $request->user()->company->owner_id){
             abort(401);
         }
 
