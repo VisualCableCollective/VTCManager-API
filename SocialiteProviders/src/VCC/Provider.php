@@ -5,6 +5,12 @@ namespace SocialiteProviders\VCC;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
 
+class VccAuthenticationFailedException extends \Exception {
+    public function __construct($message, $code = 0, \Throwable $previous = null) {
+        parent::__construct($message, $code, $previous);
+    }
+}
+
 class Provider extends AbstractProvider
 {
     /**
@@ -49,9 +55,12 @@ class Provider extends AbstractProvider
 
     /**
      * {@inheritdoc}
+     * @throws VccAuthenticationFailedException
      */
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject($user)
     {
+        if ($user == null) throw new VccAuthenticationFailedException("Authentication failed. No user data available.");
+
         return (new User())->setRaw($user)->map([
             'id'       => $user['id'],
             'username' => $user['username'],
