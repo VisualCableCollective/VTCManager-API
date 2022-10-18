@@ -181,7 +181,7 @@ class CompanyController extends Controller
             $response["msg"] = "User is not a member of a company.";
             return $response;
         }
-        
+
         $response = $request->user()->company->users()->paginate(5);
         $index = 0;
         foreach($response as $user){
