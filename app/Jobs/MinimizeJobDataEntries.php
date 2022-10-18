@@ -16,6 +16,9 @@ class MinimizeJobDataEntries implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    // This is a very intense job. Timeout after 10 minutes
+    public $timeout = 10 * 60;
+
     /**
      * Create a new job instance.
      *
