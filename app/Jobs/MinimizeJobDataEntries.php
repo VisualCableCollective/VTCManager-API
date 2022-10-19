@@ -39,9 +39,7 @@ class MinimizeJobDataEntries implements ShouldQueue
         $previous_sum_of_entries = JobDataEntry::all()->count();
 
         // only retrieve jobs, where data entries are newer than 24 hours + 1 hour safe margin
-        $jobs = Job::whereRelation(
-            'job_data_entries', 'created_at', '>=', now()->subHours(25)
-        )->get();
+        $jobs = Job::all();
 
         foreach ($jobs as $job) {
             $data = $job->job_data_entries()->get();
