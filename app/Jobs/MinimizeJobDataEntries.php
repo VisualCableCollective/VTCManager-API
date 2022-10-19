@@ -46,15 +46,11 @@ class MinimizeJobDataEntries implements ShouldQueue
         foreach ($jobs as $job) {
             $data = $job->job_data_entries()->get();
             $count = $data->count();
-            if($count > 60){
-                //reduce models
-                $delta = floor($count/60);
-                for($currentStage = 0; $currentStage < $count; $currentStage = $currentStage + $delta){
-                    $i = $currentStage + 1;
-                    while($i < $currentStage + $delta && $i < $count){
-                        $data[$i]->delete();
-                        $i++;
-                    }
+
+            // loop, but don't check first and last element
+            for ($i = 1; $i < $count - 1; $i++) {
+                if ($data[$i - 1]->current_speed_kph == $data[$i]->current_speed_kph) {
+                    $data[$i]->delete();
                 }
             }
         }
