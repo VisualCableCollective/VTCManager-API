@@ -139,7 +139,9 @@ class CompanyController extends Controller
 
         $index = 0;
         foreach($response as $application){
-            $response[$index]["applicant"]["username"] = User::getUsername($application->applicant->id);
+            if ($application->applicant) {
+                $response[$index]["applicant"]["username"] = User::getUsername($application->applicant->id);
+            }
             $index++;
         }
 
@@ -153,7 +155,9 @@ class CompanyController extends Controller
             }
         ])->get()->first();
 
-        $response["applicant"]["username"] = User::getUsername($response["applicant"]["id"]);
+        if ($response["applicant"]) {
+            $response["applicant"]["username"] = User::getUsername($response["applicant"]["id"]);
+        }
 
         return $response;
     }
