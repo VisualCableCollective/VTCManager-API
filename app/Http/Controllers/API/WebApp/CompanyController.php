@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
@@ -135,14 +136,14 @@ class CompanyController extends Controller
             'applicant' => function($q){
                 $q->select("id");
             }
-        ])->paginate(5);
+        ])->paginate(5)->toArray();
 
         $index = 0;
-        foreach($response as $application){
-            if ($application->applicant) {
-                $response[$index]["applicant"]["username"] = User::getUsername($application->applicant->id);
+        foreach($response["data"] as $application){
+            if ($application["applicant"]) {
+                $response["data"][$index]["applicant"]["username"] = User::getUsername($application->applicant->id);
             } else {
-                $response[$index]["applicant"] = ["username" => "n/a"];
+                $response["data"][$index]["applicant"] = ["username" => "n/a"];
             }
             $index++;
         }
@@ -160,7 +161,7 @@ class CompanyController extends Controller
         if ($response["applicant"]) {
             $response["applicant"]["username"] = User::getUsername($response["applicant"]["id"]);
         } else {
-            $response["applicant"]["username"] = "n/a";
+            $response["applicant"] = ["username" => "n/a"];
         }
 
         return $response;
