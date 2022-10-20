@@ -142,7 +142,7 @@ class CompanyController extends Controller
             if ($application->applicant) {
                 $response[$index]["applicant"]["username"] = User::getUsername($application->applicant->id);
             } else {
-                $response[$index]["applicant"]["username"] = "n/a";
+                $response[$index]["applicant"] = ["username" => "n/a"];
             }
             $index++;
         }
