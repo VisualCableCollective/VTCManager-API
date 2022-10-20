@@ -141,6 +141,8 @@ class CompanyController extends Controller
         foreach($response as $application){
             if ($application->applicant) {
                 $response[$index]["applicant"]["username"] = User::getUsername($application->applicant->id);
+            } else {
+                $response[$index]["applicant"]["username"] = "n/a";
             }
             $index++;
         }
@@ -157,6 +159,8 @@ class CompanyController extends Controller
 
         if ($response["applicant"]) {
             $response["applicant"]["username"] = User::getUsername($response["applicant"]["id"]);
+        } else {
+            $response["applicant"]["username"] = "n/a";
         }
 
         return $response;
