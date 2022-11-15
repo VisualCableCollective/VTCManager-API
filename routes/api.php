@@ -56,6 +56,10 @@ Route::middleware(['auth:sanctum', /*'licenseKey'*/])->group(function (){
         Route::get('dashboard', [App\Http\Controllers\API\WebAppController::class, 'dashboard']);
     });
 
+    Route::prefix('money-transactions')->group(function() {
+       Route::post('/', [\App\Http\Controllers\MoneyTransactionController::class, 'store']);
+    });
+
     //Company
     Route::prefix('company')->group(function(){
         Route::delete('/', [App\Http\Controllers\API\WebApp\CompanyController::class, 'delete'])->middleware('owner');

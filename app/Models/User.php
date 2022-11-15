@@ -71,6 +71,16 @@ class User extends Authenticatable
         return $this->hasMany(Job::class);
     }
 
+    public function sent_money_transactions()
+    {
+        return $this->hasMany(MoneyTransaction::class, 'sender_id');
+    }
+
+    public function received_money_transactions()
+    {
+        return $this->hasMany(MoneyTransaction::class, 'receiver_id');
+    }
+
     public function job_applications()
     {
         return $this->hasMany(JobApplication::class, "applicant_id");
