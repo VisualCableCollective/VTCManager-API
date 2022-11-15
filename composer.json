@@ -69,6 +69,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "install-win": "composer install --ignore-platform-req=ext-pcntl --ignore-platform-req=ext-posix",
+        "update-win": "composer update --ignore-platform-req=ext-pcntl --ignore-platform-req=ext-posix"
     }
 }
