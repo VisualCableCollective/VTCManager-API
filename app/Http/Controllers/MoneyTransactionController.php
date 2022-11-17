@@ -8,6 +8,8 @@ use App\Http\Requests\StoreMoneyTransactionRequest;
 use App\Models\MoneyTransaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class MoneyTransactionController extends Controller
 {
@@ -16,11 +18,17 @@ class MoneyTransactionController extends Controller
 
         $sent_transactions = collect(auth()->user()->sent_money_transactions()->get());
 
-        return $received_transactions->merge($sent_transactions);
+        return $received_transactions->merge($sent_transactions)
+            ->sortByDesc('created_at');
     }
 
     public function store(StoreMoneyTransactionRequest $request) {
         $validated = $request->validated();
+
+        // we do additional validation here to ensure that the user is not sending transactions to himself
+        Validator::make($validated, [
+            'receiver_id' => Rule::notIn([auth()->id()]),
+        ])->validate();
 
         $transaction = new MoneyTransaction();
         $transaction->type = MoneyTransactionType::Common;

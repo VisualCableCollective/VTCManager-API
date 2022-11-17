@@ -57,7 +57,8 @@ Route::middleware(['auth:sanctum', /*'licenseKey'*/])->group(function (){
     });
 
     Route::prefix('money-transactions')->group(function() {
-       Route::post('/', [\App\Http\Controllers\MoneyTransactionController::class, 'store']);
+        Route::get('/', [\App\Http\Controllers\MoneyTransactionController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\MoneyTransactionController::class, 'store']);
     });
 
     //Company
