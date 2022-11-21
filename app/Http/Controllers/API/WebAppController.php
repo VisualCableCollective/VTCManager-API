@@ -33,6 +33,7 @@ class WebAppController extends Controller
         unset($response["VCC_User"]->user["two_factor_confirmed_at"]);
         unset($response["VCC_User"]->user["email_verified_at"]);
         unset($response["VCC_User"]->user["email_verified_at"]);
+        unset($response["VCC_User"]->attributes);
 
         return $response;
     }
